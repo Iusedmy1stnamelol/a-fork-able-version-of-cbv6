@@ -189,8 +189,8 @@ class WelcomeBanner:
         else:
             if vanity:
                 invite = vanity
-                if len(invite.code) > 15:
-                    invite.code = f'{invite.code[:15]}...'
+                if len(invite.code) > 7:
+                    invite.code = f'{invite.code[:7]}...'
                 text = f'• Joined using vanity invite: {invite.code} ({invite.uses} uses)'
             else:
                 text = 'I couldn\'t find who invited them'
@@ -615,9 +615,8 @@ class Spotify:
 async def get_rock(self):
     rock = await self.http.api["rock"]["random"]()
     name = rock["name"]
-    desc = rock["desc"]
+    desc = rock["description"]
     image = rock["image"]
-    rating = rock["rating"]
     embed = await self.bot.embed(
         title=f"🪨   {name}",
         url=image or "https://www.youtube.com/watch?v=o-YBDTqX_ZU",
@@ -625,7 +624,7 @@ async def get_rock(self):
     )
     if image is not None and image != "none" and image != "":
         embed.set_thumbnail(url=image)
-    return (embed, rating)
+    return (embed)
 
 class AntiRaid:
     """
